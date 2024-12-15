@@ -5,27 +5,28 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class App {
-    public static void main( String[] args ) {
-        Configuration config = new Configuration();
-        config.configure();
-        System.out.println("File Configured successfully");
+    public static void main(String[] args) {
+        Configuration config = new Configuration().configure("hibernate.cfg.xml");
 
         SessionFactory sf = config.buildSessionFactory();
-        System.out.println("Session Factory created successfully");
-
         Session session = sf.openSession();
-        System.out.println("Session Opened successfully");
+
+        Student s1 = new Student("Rio", "cbs University");
+        Student s2 = new Student("John", "abc University");
+        Student s3 = new Student("Rohit", "ITI Bombay");
+        Student s4 = new Student("Vinay", "Quantum University");
+        System.out.println(s1.toString() + s2 + s3 + s4);
 
         session.beginTransaction();
 
-        Student student = new Student(2,"Vinay","ITE Delhi");
-        session.persist(student);
-
-        session.getTransaction().commit();
+        session.persist(s1);
+        session.persist(s2);
+        session.persist(s3);
+        session.persist(s4);
 
         session.close();
         sf.close();
 
-        System.out.println("closed");
+        System.out.println("Done...");
     }
 }
